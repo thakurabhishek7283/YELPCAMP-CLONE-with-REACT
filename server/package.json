@@ -1,0 +1,32 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "website for campgrounds lookups",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thakurabhishek7283/yelpcamp-react.git"
+  },
+  "author": "abhishek thakur",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thakurabhishek7283/yelpcamp-react/issues"
+  },
+  "homepage": "https://github.com/thakurabhishek7283/yelpcamp-react#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^14.3.2",
+    "express": "^4.17.2",
+    "jsonwebtoken": "^8.5.1",
+    "md5": "^2.3.0",
+    "mongoose": "^6.1.8"
+  }
+}
