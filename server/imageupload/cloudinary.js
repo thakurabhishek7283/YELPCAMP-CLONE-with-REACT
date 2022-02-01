@@ -1,7 +1,5 @@
 const cloudinary = require("cloudinary").v2;
 const { CloudinaryStorage } = require("multer-storage-cloudinary");
-import { v4 as uuidv4 } from "uuid";
-
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
   api_key: process.env.API_KEY,
@@ -11,12 +9,9 @@ cloudinary.config({
 const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
-    folder: "campgrounds",
-    format: (req, file) => {
-      return "jpeg";
-    },
-    public_id: (req, file) => uuidv4(),
+    folder: "Campgrounds",
+    allowed_formats: [jpeg, png],
+    use_filename: true,
   },
 });
-
-export default storage;
+export { storage, cloudinary };

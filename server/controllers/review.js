@@ -24,7 +24,7 @@ export const deleteReview = async (req, res) => {
   const { campId, reviewId } = req.params;
   try {
     const query = await Review.findByIdAndDelete(reviewId);
-    console.log("if this query", query);
+    console.log("delete query", query);
     const campground = await Campground.findById(campId);
     const newreviews = campground.reviews.filter(
       (review) => review !== reviewId

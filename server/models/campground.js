@@ -11,10 +11,12 @@ const campgroundSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  images: {
-    type: [String],
-    required: true,
-  },
+  images: [
+    {
+      imageUrl: String,
+      publicId: String,
+    },
+  ],
   creator: {
     type: mongoose.SchemaTypes.ObjectId,
     ref: "User",
