@@ -1,11 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Auth from "./components/Auth/Auth";
+import AuthLayout from "./layouts/auth.layout";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Auth />} />
+        <Route path="/auth" element={<AuthLayout />} />
         {/* <Route path="/" element={}/>
       <Route path="/" element={}/>
       <Route path="/" element={}/>

@@ -15,4 +15,4 @@ import Auth from "./components/Auth/Auth";
 //   </Provider>,
 //   document.getElementById("root")
 // );
-ReactDOM.render(<Auth />, document.getElementById("root"));
+ReactDOM.render(<App />, document.getElementById("root"));

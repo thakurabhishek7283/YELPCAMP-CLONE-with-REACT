@@ -12,7 +12,6 @@ function Auth() {
     password: "",
     confirmPassword: "",
   });
-  const [validateForm, setValidateForm] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [forSignup, setForSignup] = useState(false);
 
@@ -24,14 +23,6 @@ function Auth() {
     setAuthForm((prev) => {
       return { ...prev, [e.target.name]: [e.target.value] };
     });
-    if (
-      forSignup &&
-      authForm.password.length > 8 &&
-      authForm.confirmPassword === authForm.password
-    ) {
-      setValidateForm(true);
-    } else if (authForm.password.length > 8 && !forSignup)
-      setValidateForm(true);
   };
 
   const handleAuthRoute = () => {
@@ -46,13 +37,17 @@ function Auth() {
       <StyledAvatar>
         <LockOutlinedIcon />
       </StyledAvatar>
-      <form autoComplete="off">
+      <form
+        autoComplete="off"
+        style={{ display: "flex", justifyContent: "center" }}
+      >
         <StyledGrid container spacing={2}>
           {forSignup && (
             <>
               <Input
                 name="firstName"
                 label="First Name"
+                value={authForm.firstName}
                 type="text"
                 half={true}
                 autoFocus={true}
@@ -61,6 +56,7 @@ function Auth() {
               <Input
                 name="lastName"
                 label="Last Name"
+                value={authForm.lastName}
                 type="text"
                 half={true}
                 handleChange={handleChange}
@@ -70,6 +66,7 @@ function Auth() {
           <Input
             name="email"
             label="Email"
+            value={authForm.email}
             type="email"
             half={false}
             handleChange={handleChange}
@@ -77,6 +74,7 @@ function Auth() {
           <Input
             name="password"
             type={showPassword ? "text" : "password"}
+            value={authForm.password}
             label="Password"
             half={false}
             handleShowPassword={handleShowPassword}
@@ -86,6 +84,7 @@ function Auth() {
             <Input
               name="confirmPassword"
               label="confirm Password"
+              value={authForm.confirmPassword}
               type={showPassword ? "text" : "password"}
               half={false}
               handleShowPassword={handleShowPassword}
@@ -93,17 +92,30 @@ function Auth() {
             />
           )}
         </StyledGrid>
+      </form>
+      <Box
+        sx={{
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          flexDirection: "column",
+          justifyContent: "space-between",
+        }}
+      >
         <Button
           color="primary"
           variant="contained"
-          disabled={!validateForm}
           onClick={handleFormSubmit}
+          sx={{ width: "90%", marginBottom: 1 }}
         >
           {forSignup ? "Sign up" : "Sign in"}
         </Button>
-      </form>
-      <Box>
-        <Button color="secondary" variant="contained" onClick={handleAuthRoute}>
+        <Button
+          color="secondary"
+          variant="contained"
+          onClick={handleAuthRoute}
+          sx={{ width: "90%" }}
+        >
           {forSignup
             ? "Already have an account? Sign In"
             : "Don't have an account? Sign Up"}
