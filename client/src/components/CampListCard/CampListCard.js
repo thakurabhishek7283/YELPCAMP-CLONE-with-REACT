@@ -19,7 +19,7 @@ const CampListCard = () => {
               paddingTop: "56.25%", // 16:9,
               marginTop: "30",
             }}
-            image={require("../../images/Resume.png")}
+            image={require("../../images/resume.png")}
           />
         </Grid>
 
