@@ -10,8 +10,8 @@ function App() {
       <Routes>
         <Route path="/" element={<HomeLayout />} />
         <Route path="/auth" element={<AuthLayout />} />
-        <Route path="/campground/:id" element={<CampgroundLayout />} />
         <Route path="/campground/new" element={<CreateLayout />} />
+        <Route path="/campground/:id" element={<CampgroundLayout />} />
       </Routes>
     </BrowserRouter>
   );
