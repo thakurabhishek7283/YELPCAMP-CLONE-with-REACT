@@ -45,9 +45,7 @@ export const updateReview = async (req, res) => {
       { rating, message },
       { new: true }
     );
-    return res
-      .status(200)
-      .json({ message: "document is updated", document: updatedReview });
+    return res.status(200).json(updatedReview);
   } catch (error) {
     return console.log("error during updation of review", error);
   }

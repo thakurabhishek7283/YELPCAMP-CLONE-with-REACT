@@ -47,7 +47,6 @@ function Auth() {
               <Input
                 name="firstName"
                 label="First Name"
-                value={authForm.firstName}
                 type="text"
                 half={true}
                 autoFocus={true}
@@ -56,7 +55,6 @@ function Auth() {
               <Input
                 name="lastName"
                 label="Last Name"
-                value={authForm.lastName}
                 type="text"
                 half={true}
                 handleChange={handleChange}
@@ -66,7 +64,6 @@ function Auth() {
           <Input
             name="email"
             label="Email"
-            value={authForm.email}
             type="email"
             half={false}
             handleChange={handleChange}
@@ -74,7 +71,6 @@ function Auth() {
           <Input
             name="password"
             type={showPassword ? "text" : "password"}
-            value={authForm.password}
             label="Password"
             half={false}
             handleShowPassword={handleShowPassword}
@@ -84,7 +80,6 @@ function Auth() {
             <Input
               name="confirmPassword"
               label="confirm Password"
-              value={authForm.confirmPassword}
               type={showPassword ? "text" : "password"}
               half={false}
               handleShowPassword={handleShowPassword}

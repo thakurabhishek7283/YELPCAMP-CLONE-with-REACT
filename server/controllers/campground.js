@@ -32,10 +32,8 @@ export const createCampground = async (req, res) => {
       location,
       images,
     });
-    await campground.save();
-    return res
-      .status(201)
-      .json({ campground, message: "created successfully" });
+    const newCampground = await campground.save();
+    return res.status(201).json({ data: newCampground });
   } catch (error) {
     return console.log("error during create campground", error);
   }
@@ -49,7 +47,7 @@ export const getCampgrounds = async (req, res) => {
       .limit(12)
       .populate("creator", "fullName");
 
-    return res.status(200).json({ campgrounds });
+    return res.status(200).json({ data: campgrounds });
   } catch (error) {
     return console.log("error during getcampgrounds", error);
   }
@@ -60,18 +58,23 @@ export const updateCampground = async (req, res) => {
   const images = req.files.map((file) => {
     return { imageUrl: file.url, publicId: file.public_id };
   });
-  const doc = await Campground.findByIdAndUpdate(
-    campId,
-    { title, description, tags, location },
-    { new: true }
-  );
-  await doc.images.push(...images);
-  await doc.save();
-  cloudinary.v2.api.delete_resources(deleteArray);
-  if (deleteArray) {
-    await doc.updateOne({
-      $pull: { images: { publicId: { $in: deleteArray } } },
-    });
+  try {
+    const doc = await Campground.findByIdAndUpdate(
+      campId,
+      { title, description, tags, location },
+      { new: true }
+    );
+    await doc.images.push(...images);
+    const data = await doc.save();
+    cloudinary.v2.api.delete_resources(deleteArray);
+    if (deleteArray) {
+      await doc.updateOne({
+        $pull: { images: { publicId: { $in: deleteArray } } },
+      });
+    }
+    return res.status(200).json({ data: data });
+  } catch (error) {
+    console.log("error while updating campground", error);
   }
 };
 export const deleteCampground = async (req, res) => {
