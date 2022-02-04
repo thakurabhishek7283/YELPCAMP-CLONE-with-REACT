@@ -1,14 +1,16 @@
-import "dotenv/config";
-import express from "express";
-import mongoose from "mongoose";
+require("dotenv").config();
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
 
-import userAuthRoute from "./routes/user";
-import reviewRoute from "./routes/review";
-import campgroundRoute from "./routes/campground";
+const userAuthRoute = require("./routes/user.js");
+const reviewRoute = require("./routes/review.js");
+const campgroundRoute = require("./routes/campground.js");
 
 const app = express();
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 app.use("/auth", userAuthRoute);
 app.use("/campground/:campId/review/", reviewRoute);

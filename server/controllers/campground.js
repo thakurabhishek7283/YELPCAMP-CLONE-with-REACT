@@ -1,8 +1,8 @@
-import Campground from "../models/campground";
-import Review from "../models/review";
-import { cloudinary } from "../imageupload/cloudinary";
+const { Campground } = require("../models/campground.js");
+const { Review } = require("../models/review.js");
+const { cloudinary } = require("../imageupload/cloudinary");
 
-export const getCampground = async (req, res) => {
+exports.getCampground = async (req, res) => {
   const { campId } = req.params;
   try {
     const campground = await Campground.findById(campId)
@@ -17,7 +17,7 @@ export const getCampground = async (req, res) => {
     return console.log("error during get campground", error);
   }
 };
-export const createCampground = async (req, res) => {
+exports.createCampground = async (req, res) => {
   const { title, description, tags, location } = req.body;
   const creator = req.userId;
   const images = req.files.map((file) => {
@@ -38,7 +38,7 @@ export const createCampground = async (req, res) => {
     return console.log("error during create campground", error);
   }
 };
-export const getCampgrounds = async (req, res) => {
+exports.getCampgrounds = async (req, res) => {
   const { page } = req.body;
   const beginIndex = page * 12 - 12;
   try {
@@ -52,7 +52,7 @@ export const getCampgrounds = async (req, res) => {
     return console.log("error during getcampgrounds", error);
   }
 };
-export const updateCampground = async (req, res) => {
+exports.updateCampground = async (req, res) => {
   const { title, description, tags, location, deleteArray } = req.body;
   const { campId } = req.params;
   const images = req.files.map((file) => {
@@ -77,15 +77,17 @@ export const updateCampground = async (req, res) => {
     console.log("error while updating campground", error);
   }
 };
-export const deleteCampground = async (req, res) => {
+exports.deleteCampground = async (req, res) => {
   const { campId } = req.params;
   try {
     const reviews = await Campground.findById(campId);
-    reviews.forEach((review) => {
+    reviews.forEach(async (review) => {
       await Review.deleteOne({ _id: review._id });
     });
-    await Campground.deleteOne({ _id: campId });
-    return res.status(200).json({ message: "deleted successfully" });
+    const data = await Campground.deleteOne({ _id: campId });
+    return res
+      .status(200)
+      .json({ message: "deleted successfully", data: data });
   } catch (error) {
     console.log("error while deletion", error);
   }

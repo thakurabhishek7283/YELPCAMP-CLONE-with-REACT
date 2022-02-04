@@ -1,4 +1,5 @@
 import * as api from "../api/index";
+import { AUTH } from "../constants/constants";
 
 export const signup = (formData, navigate) => async (dispatch) => {
   try {

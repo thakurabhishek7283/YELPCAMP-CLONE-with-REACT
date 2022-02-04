@@ -28,5 +28,7 @@ export default (state = { reviews: [], isLoading: true }, action) => {
           (review) => review._id !== action.payload
         ),
       };
+    default:
+      return { ...state };
   }
 };

@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";
+const jwt = require("jsonwebtoken");
 
 const secret = process.env.SECRET_KEY;
 const auth = async (req, res, next) => {
@@ -12,3 +12,5 @@ const auth = async (req, res, next) => {
     return console.log("error during token verification", error);
   }
 };
+
+module.exports = auth;

@@ -1,9 +1,8 @@
-import User from "../models/user";
-import express from "express";
-import Review from "../models/review";
-import Campground from "../models/campground";
+const { User } = require("../models/user.js");
+const { Review } = require("../models/review.js");
+const { Campground } = require("../models/campground.js");
 
-export const createReview = async (req, res) => {
+exports.createReview = async (req, res) => {
   const { campId } = req.params;
   const { message, rating } = req.body;
   const creator = req.userId;
@@ -20,7 +19,7 @@ export const createReview = async (req, res) => {
     return console.log("error during createReview", error);
   }
 };
-export const deleteReview = async (req, res) => {
+exports.deleteReview = async (req, res) => {
   const { campId, reviewId } = req.params;
   try {
     const query = await Review.findByIdAndDelete(reviewId);
@@ -36,7 +35,7 @@ export const deleteReview = async (req, res) => {
     console.log("error during deletion of review", error);
   }
 };
-export const updateReview = async (req, res) => {
+exports.updateReview = async (req, res) => {
   const { campId, reviewId } = req.params;
   const { rating, message } = req.body;
   try {

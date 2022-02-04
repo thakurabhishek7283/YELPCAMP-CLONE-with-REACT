@@ -1,11 +1,14 @@
-import express from "express";
-import {
+const express = require("express");
+const {
   createReview,
   deleteReview,
   updateReview,
-} from "../controllers/review";
+} = require("../controllers/review.js");
+const auth = require("../middlewares/auth.js");
 const router = express.Router();
 
 router.post("/", auth, createReview);
 router.delete("/:reviewId", auth, deleteReview);
 router.patch("/:reviewId", auth, updateReview);
+
+module.exports = router;

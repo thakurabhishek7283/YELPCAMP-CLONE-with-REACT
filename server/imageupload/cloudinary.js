@@ -10,8 +10,8 @@ const storage = new CloudinaryStorage({
   cloudinary: cloudinary,
   params: {
     folder: "Campgrounds",
-    allowed_formats: [jpeg, png],
+    allowed_formats: ["jpeg", "png"],
     use_filename: true,
   },
 });
-export { storage, cloudinary };
+module.exports = { storage: storage, cloudinary: cloudinary };

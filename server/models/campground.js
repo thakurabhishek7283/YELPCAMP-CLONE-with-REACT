@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const campgroundSchema = new mongoose.Schema({
   title: {
@@ -39,6 +39,4 @@ const campgroundSchema = new mongoose.Schema({
   },
 });
 
-const Campground = mongoose.model("Campground", campgroundSchema);
-
-export default Campground;
+exports.Campground = mongoose.model("Campground", campgroundSchema);

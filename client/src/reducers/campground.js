@@ -40,5 +40,8 @@ export default (state = { isLoading: true, campgrounds: [] }, action) => {
 
     case FETCH_CAMP:
       return { ...state, campgrounds: [...state.campgrounds, action.payload] };
+
+    default:
+      return { ...state };
   }
 };

@@ -3,8 +3,13 @@ import { useState } from "react";
 import Input from "./Input";
 import { StyledPaper, StyledGrid, StyledAvatar } from "./styles";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { useNavigate } from "react-router-dom";
+import { signin, signup } from "../../actions/user";
+import { useDispatch } from "react-redux";
 
 function Auth() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [authForm, setAuthForm] = useState({
     firstName: "",
     lastName: "",
@@ -21,7 +26,7 @@ function Auth() {
 
   const handleChange = (e) => {
     setAuthForm((prev) => {
-      return { ...prev, [e.target.name]: [e.target.value] };
+      return { ...prev, [e.target.name]: e.target.value };
     });
   };
 
@@ -30,7 +35,11 @@ function Auth() {
   };
 
   const handleFormSubmit = () => {
-    console.log(authForm);
+    if (forSignup) {
+      dispatch(signup(authForm, navigate));
+    } else {
+      dispatch(signin(authForm, navigate));
+    }
   };
   return (
     <StyledPaper elevation={6}>

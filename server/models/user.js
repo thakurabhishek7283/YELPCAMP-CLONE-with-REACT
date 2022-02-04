@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
   firstName: {
@@ -35,6 +35,4 @@ userSchema.virtual("fullName").get(function () {
   return this.firstName + " " + this.lastName;
 });
 
-const User = mongoose.model("User", userSchema);
-
-export default User;
+exports.User = mongoose.model("User", userSchema);
