@@ -21,7 +21,7 @@ exports.createCampground = async (req, res) => {
   const { title, description, tags, location } = req.body;
   const creator = req.userId;
   const images = req.files.map((file) => {
-    return { imageUrl: file.url, publicId: file.public_id };
+    return { imageUrl: file.url, publicId: file.filename };
   });
   try {
     const campground = new Campground({
@@ -80,14 +80,20 @@ exports.updateCampground = async (req, res) => {
 exports.deleteCampground = async (req, res) => {
   const { campId } = req.params;
   try {
-    const reviews = await Campground.findById(campId);
+    const campground = await Campground.findById(campId);
+    const reviews = [...campground.reviews];
+    const images = [...campground.images];
+
+    cloudinary.v2.api.delete_resources([images.publicId]);
+    // images.forEach(element=>{
+    //   cloudinary.uploader.destroy(element.publicId)
+    // })
     reviews.forEach(async (review) => {
       await Review.deleteOne({ _id: review._id });
     });
-    const data = await Campground.deleteOne({ _id: campId });
-    return res
-      .status(200)
-      .json({ message: "deleted successfully", data: data });
+
+    await Campground.deleteOne({ _id: campId });
+    return res.status(200).json({ message: "deleted successfully" });
   } catch (error) {
     console.log("error while deletion", error);
   }

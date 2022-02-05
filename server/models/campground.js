@@ -13,8 +13,10 @@ const campgroundSchema = new mongoose.Schema({
   },
   images: [
     {
-      imageUrl: String,
-      publicId: String,
+      imageUrl: {
+        type: String,
+      },
+      publicId: { type: String },
     },
   ],
   creator: {

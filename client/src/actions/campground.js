@@ -1,4 +1,5 @@
 import * as api from "../api/index";
+import * as apiMultipart from "../api/profile";
 import {
   START_LOADING,
   END_LOADING,
@@ -12,11 +13,11 @@ import {
 export const createCampground = (formData, navigate) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING });
-    const { data } = await api.createCampground(formData);
-    const { campId } = data;
+    const { data } = await apiMultipart.createCampground(formData);
+    const { _id } = data;
     dispatch({ type: CREATE_CAMP, payload: data });
     dispatch({ type: END_LOADING });
-    navigate(`/campground/${campId}`);
+    navigate(`/campground/${_id}`);
   } catch (error) {
     console.log(error);
   }
@@ -25,7 +26,7 @@ export const createCampground = (formData, navigate) => async (dispatch) => {
 export const updateCampground = (formData, navigate) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING });
-    const { data } = await api.updateCampground(formData);
+    const { data } = await apiMultipart.updateCampground(formData);
     const { campId } = data;
     dispatch({ type: UPDATE_CAMP, payload: data });
     dispatch({ type: END_LOADING });

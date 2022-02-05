@@ -6,7 +6,7 @@ import {
   DELETE_REVIEW,
 } from "../constants/constants";
 
-export default (state = { reviews: [], isLoading: true }, action) => {
+export default (state = { reviews: [], isLoading: false }, action) => {
   switch (action.type) {
     case START_LOADING:
       return { ...state, isLoading: true };

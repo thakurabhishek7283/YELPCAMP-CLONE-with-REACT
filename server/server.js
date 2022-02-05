@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
+const { storage } = require("./imageupload/cloudinary");
 const userAuthRoute = require("./routes/user.js");
 const reviewRoute = require("./routes/review.js");
 const campgroundRoute = require("./routes/campground.js");

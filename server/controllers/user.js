@@ -13,7 +13,7 @@ exports.signin = async (req, res) => {
       return res.status(404).json({ message: "user doesn't exist" });
 
     if (olduser.password === passwordHash) {
-      const token = jwt.sign({ email, password }, secret, { expiresIn: "1h" });
+      const token = jwt.sign(olduser.toJSON(), secret, { expiresIn: "1h" });
       return res.status(200).json({ token });
     }
   } catch (error) {

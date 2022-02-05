@@ -34,12 +34,12 @@ const NavBar = () => {
   };
 
   useEffect(() => {
-    const token = user?.token;
+    const token = user?.data.token;
 
     if (token) {
       const decodedToken = jwt_decode(token);
 
-      if (decodedToken.exp < new Date().getTime()) logout();
+      if (decodedToken.exp * 1000 < new Date().getTime()) logout();
     }
 
     setUser(JSON.parse(localStorage.getItem("profile")));

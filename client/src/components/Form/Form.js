@@ -1,6 +1,7 @@
 import {
   Button,
   FormControl,
+  CircularProgress,
   OutlinedInput,
   Paper,
   TextField,
@@ -11,14 +12,21 @@ import {
 } from "@mui/material";
 import ChipInput from "./ChipInput";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { createCampground } from "../../actions/campground";
 
 function Form() {
+  const isLoading = useSelector((state) => state.campground.isLoading);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     title: "",
     description: "",
     tags: [],
     location: "",
-    selectedFiles: null,
+    selectedFiles: [],
   });
   const [tagsInput, setTagsInput] = useState("");
 
@@ -50,13 +58,27 @@ function Form() {
   const handleFileChange = (e) => {
     setFormData((prev) => ({
       ...prev,
-      selectedFiles: e.target.files,
+      selectedFiles: [...prev.selectedFiles, ...e.target.files],
     }));
   };
 
-  const handleSubmit = () => {
-    console.log(formData);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const campForm = new FormData();
+    formData.selectedFiles.forEach((element) => {
+      campForm.append("images", element);
+    });
+    campForm.append("images", formData.selectedFiles);
+    campForm.append("title", formData.title);
+    campForm.append("location", formData.location);
+    campForm.append("description", formData.description);
+    campForm.append("tags", formData.tags);
+    dispatch(createCampground(campForm, navigate));
   };
+
+  if (isLoading) {
+    return <CircularProgress />;
+  }
   return (
     <Paper
       elevation={5}
@@ -81,6 +103,7 @@ function Form() {
         <FormControl fullWidth>
           <TextField label="title" name="title" onChange={handleChange} />
         </FormControl>
+
         <FormControl fullWidth>
           <TextField
             label="description"
@@ -98,7 +121,12 @@ function Form() {
           />
         </FormControl>
         <FormControl fullWidth>
-          <Input type="file" onChange={handleFileChange} />
+          <input
+            type="file"
+            multiple
+            name="images"
+            onChange={handleFileChange}
+          />
         </FormControl>
         <FormControl fullWidth>
           <OutlinedInput

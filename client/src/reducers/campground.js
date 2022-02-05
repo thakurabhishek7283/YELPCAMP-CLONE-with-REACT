@@ -8,7 +8,7 @@ import {
   END_LOADING,
 } from "../constants/constants";
 
-export default (state = { isLoading: true, campgrounds: [] }, action) => {
+export default (state = { isLoading: false, campgrounds: [] }, action) => {
   switch (action.type) {
     case START_LOADING:
       return { ...state, isLoading: true };

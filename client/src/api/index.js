@@ -5,7 +5,7 @@ const API = axios.create({ baseURL: "http://localhost:5000/" });
 API.interceptors.request.use((req) => {
   if (localStorage.getItem("profile")) {
     req.headers.Authorization = `Bearer ${
-      JSON.parse(localStorage.getItem("profile")).token
+      JSON.parse(localStorage.getItem("profile")).data.token
     }`;
   }
 
@@ -14,10 +14,7 @@ API.interceptors.request.use((req) => {
 
 export const fetchCampground = (campId) => API.get(`/campground/${campId}`);
 export const fetchCampgrounds = (page) => API.get(`/campground?page=${page}`);
-export const createCampground = (newCampground) =>
-  API.post(`/campground/new`, newCampground);
-export const updateCampground = (campId, campground) =>
-  API.patch(`/campground/${campId}`, campground);
+
 export const deleteCampground = (campId) => API.delete(`/campground/${campId}`);
 
 export const createReview = (campId, review) =>
