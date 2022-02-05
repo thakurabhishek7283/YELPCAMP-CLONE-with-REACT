@@ -1,5 +1,5 @@
-const { Campground } = require("../models/campground.js");
 const { Review } = require("../models/review.js");
+const { Campground } = require("../models/campground.js");
 const { cloudinary } = require("../imageupload/cloudinary");
 
 exports.getCampground = async (req, res) => {
@@ -12,7 +12,7 @@ exports.getCampground = async (req, res) => {
     if (!campground)
       return res.status(404).json({ message: "campground not found" });
 
-    return res.status(200).json({ campground });
+    return res.status(200).json(campground);
   } catch (error) {
     return console.log("error during get campground", error);
   }
@@ -21,7 +21,7 @@ exports.createCampground = async (req, res) => {
   const { title, description, tags, location } = req.body;
   const creator = req.userId;
   const images = req.files.map((file) => {
-    return { imageUrl: file.url, publicId: file.filename };
+    return { imageUrl: file.path, publicId: file.filename };
   });
   try {
     const campground = new Campground({
@@ -30,24 +30,25 @@ exports.createCampground = async (req, res) => {
       tags,
       creator,
       location,
-      images,
     });
-    const newCampground = await campground.save();
-    return res.status(201).json({ data: newCampground });
+    campground.images.push(...images);
+    const data = await campground.save();
+    return res.status(201).json(data);
   } catch (error) {
     return console.log("error during create campground", error);
   }
 };
 exports.getCampgrounds = async (req, res) => {
-  const { page } = req.body;
-  const beginIndex = page * 12 - 12;
+  const { page } = req.query;
+
+  const beginIndex = Number(page) * 12 - 12;
   try {
     const campgrounds = await Campground.find()
       .skip(beginIndex)
       .limit(12)
       .populate("creator", "fullName");
 
-    return res.status(200).json({ data: campgrounds });
+    return res.status(200).json(campgrounds);
   } catch (error) {
     return console.log("error during getcampgrounds", error);
   }
@@ -72,7 +73,7 @@ exports.updateCampground = async (req, res) => {
         $pull: { images: { publicId: { $in: deleteArray } } },
       });
     }
-    return res.status(200).json({ data: data });
+    return res.status(200).json(data);
   } catch (error) {
     console.log("error while updating campground", error);
   }

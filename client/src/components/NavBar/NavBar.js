@@ -13,10 +13,8 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import { LOGOUT } from "../../constants/constants";
 import jwt_decode from "jwt-decode";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-
-const pages = ["Home", "campground", "new campground"];
 
 const NavBar = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
@@ -63,7 +61,9 @@ const NavBar = () => {
             component="div"
             sx={{ mr: 2, display: { xs: "none", md: "flex" } }}
           >
-            Yelpcamp
+            <Link to="/" style={{ color: "white", textDecoration: "none" }}>
+              Yelpcamp
+            </Link>
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -95,11 +95,10 @@ const NavBar = () => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem onClick={() => navigate("/")}>Home</MenuItem>
+              <MenuItem onClick={() => navigate("/campground/new")}>
+                New Campground
+              </MenuItem>
             </Menu>
           </Box>
           <Typography
@@ -111,15 +110,18 @@ const NavBar = () => {
             Yelpcamp
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                {page}
-              </Button>
-            ))}
+            <Button
+              onClick={() => navigate("/")}
+              sx={{ my: 2, color: "white", display: "block" }}
+            >
+              Home
+            </Button>
+            <Button
+              onClick={() => navigate("/campground/new")}
+              sx={{ my: 2, color: "white", display: "block" }}
+            >
+              New Campground
+            </Button>
           </Box>
           <Button color="secondary" variant="contained" onClick={logout}>
             {user ? "Logout" : "Sign in"}

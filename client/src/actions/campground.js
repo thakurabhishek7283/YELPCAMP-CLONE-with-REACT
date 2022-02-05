@@ -15,7 +15,8 @@ export const createCampground = (formData, navigate) => async (dispatch) => {
     dispatch({ type: START_LOADING });
     const { data } = await apiMultipart.createCampground(formData);
     const { _id } = data;
-    dispatch({ type: CREATE_CAMP, payload: data });
+
+    dispatch({ type: CREATE_CAMP });
     dispatch({ type: END_LOADING });
     navigate(`/campground/${_id}`);
   } catch (error) {

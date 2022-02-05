@@ -33,7 +33,7 @@ const campgroundSchema = new mongoose.Schema({
   },
   // lat: Number,
   // long: Number,
-  reviews: [{ type: mongoose.SchemaTypes.ObjectId, ref: "Reviews" }],
+  reviews: [{ type: mongoose.SchemaTypes.ObjectId, ref: "Review" }],
   hasRated: [{ type: mongoose.SchemaTypes.ObjectId, ref: "User" }],
   createdAt: {
     type: Date,

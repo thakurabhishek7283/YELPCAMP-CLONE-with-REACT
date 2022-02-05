@@ -6,31 +6,48 @@ import {
   Paper,
   Divider,
   Box,
+  CircularProgress,
 } from "@mui/material";
 import { grey, red } from "@mui/material/colors";
-import resume from "../../images/resume.png";
-const imgArray = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { fetchCampground } from "../../actions/campground";
 
 function Campground() {
+  const dispatch = useDispatch();
+  const { isLoading, campground } = useSelector((state) => state.campground);
+  console.log(campground);
+  let { campId } = useParams();
+
+  useEffect(() => {
+    dispatch(fetchCampground(campId));
+  }, [campId]);
+
+  if (!campground || isLoading) {
+    return <CircularProgress />;
+  }
   return (
-    <Paper>
+    <>
       <Grid container>
         <Grid item lg={6} sm={8} xs={12}>
-          <ImageList
-            sx={{ width: "100%", height: 450 }}
-            cols={3}
-            rowHeight={164}
-          >
-            {imgArray.map(() => (
-              <ImageListItem>
-                <img
-                  src={resume}
-                  srcSet="images"
-                  style={{ width: 164, height: 164 }}
-                />
-              </ImageListItem>
-            ))}
-          </ImageList>
+          <Box>
+            <ImageList
+              sx={{
+                width: "100%",
+                height: 450,
+              }}
+              variant="woven"
+              cols={3}
+              gap={8}
+            >
+              {campground.images.map((image, index) => (
+                <ImageListItem>
+                  <img key={index} src={image.imageUrl} alt={image.publicId} />
+                </ImageListItem>
+              ))}
+            </ImageList>
+          </Box>
         </Grid>
         <Grid item lg={6} sm={8} xs={12} sx={{ backgroundColor: red[400] }}>
           Map
@@ -43,7 +60,7 @@ function Campground() {
       <Box>
         <Review />
       </Box>
-    </Paper>
+    </>
   );
 }
 

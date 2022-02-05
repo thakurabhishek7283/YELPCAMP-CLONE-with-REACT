@@ -6,9 +6,14 @@ import {
   Grid,
   Button,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 // import resume from "../../images/Resume.png";
 
-const CampListCard = () => {
+const CampListCard = ({ campground }) => {
+  const navigate = useNavigate();
+  const handleViewClick = () => {
+    navigate(`/campground/${campground._id}`);
+  };
   return (
     <Card sx={{ maxWidth: 1000 }}>
       <Grid container spacing={2}>
@@ -19,7 +24,7 @@ const CampListCard = () => {
               paddingTop: "56.25%", // 16:9,
               marginTop: "30",
             }}
-            image={require("../../images/resume.png")}
+            image={campground.images[0].imageUrl}
           />
         </Grid>
 
@@ -34,7 +39,11 @@ const CampListCard = () => {
             culpa qui officia deserunt mollit anim id est laborum.
           </CardContent>
           <CardActions>
-            <Button variant="contained" color="success">
+            <Button
+              variant="contained"
+              color="success"
+              onClick={handleViewClick}
+            >
               View Campground
             </Button>
           </CardActions>

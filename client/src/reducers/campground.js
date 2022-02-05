@@ -17,7 +17,7 @@ export default (state = { isLoading: false, campgrounds: [] }, action) => {
       return { ...state, isLoading: false };
 
     case CREATE_CAMP:
-      return { ...state, campgrounds: [...state.campgrounds, action.payload] };
+      return { ...state };
 
     case UPDATE_CAMP:
       return {
@@ -39,7 +39,7 @@ export default (state = { isLoading: false, campgrounds: [] }, action) => {
       return { ...state, campgrounds: action.payload };
 
     case FETCH_CAMP:
-      return { ...state, campgrounds: [...state.campgrounds, action.payload] };
+      return { ...state, campground: action.payload };
 
     default:
       return { ...state };

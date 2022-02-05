@@ -11,7 +11,7 @@ function App() {
         <Route path="/" element={<HomeLayout />} />
         <Route path="/auth" element={<AuthLayout />} />
         <Route path="/campground/new" element={<CreateLayout />} />
-        <Route path="/campground/:id" element={<CampgroundLayout />} />
+        <Route path="/campground/:campId" element={<CampgroundLayout />} />
       </Routes>
     </BrowserRouter>
   );
