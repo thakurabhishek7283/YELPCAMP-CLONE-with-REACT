@@ -1,13 +1,19 @@
 const mongoose = require("mongoose");
 
 const reviewSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    min: 1,
+    max: 100,
+    required: true,
+  },
   rating: {
     type: Number,
     min: 1,
     max: 5,
     required: true,
   },
-  message: {
+  description: {
     type: String,
     minLength: 5,
     maxLength: 225,
@@ -17,7 +23,7 @@ const reviewSchema = new mongoose.Schema({
     type: mongoose.SchemaTypes.ObjectId,
     ref: "User",
   },
-  campground: {
+  campId: {
     type: mongoose.SchemaTypes.ObjectId,
     ref: "Campground",
   },

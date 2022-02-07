@@ -32,15 +32,12 @@ const NavBar = () => {
   };
 
   useEffect(() => {
-    const token = user?.data.token;
+    const token = user?.token;
 
     if (token) {
       const decodedToken = jwt_decode(token);
-
       if (decodedToken.exp * 1000 < new Date().getTime()) logout();
     }
-
-    setUser(JSON.parse(localStorage.getItem("profile")));
   }, [location]);
 
   const handleOpenNavMenu = (event) => {

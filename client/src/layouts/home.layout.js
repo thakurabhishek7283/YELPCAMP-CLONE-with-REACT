@@ -26,7 +26,7 @@ const HomeLayout = () => {
         }}
       >
         {campgrounds.map((campground) => (
-          <CampListCard campground={campground} />
+          <CampListCard campground={campground} key={campground._id} />
         ))}
       </Box>
       <Footer />

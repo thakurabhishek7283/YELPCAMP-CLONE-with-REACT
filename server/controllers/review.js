@@ -1,19 +1,26 @@
-const { User } = require("../models/user.js");
 const { Review } = require("../models/review.js");
 const { Campground } = require("../models/campground.js");
 
 exports.createReview = async (req, res) => {
   const { campId } = req.params;
-  const { message, rating } = req.body;
+  console.log("this is req.params", req.params);
+  console.log("this is user id", req.userId);
+  console.log("this is req.body", req.body);
+  const { title, description, rating } = req.body;
   const creator = req.userId;
   try {
     const reviewdoc = new Review({
+      title,
       rating,
-      message,
+      description,
       creator,
-      campground: campId,
+      campId,
     });
     const review = await reviewdoc.save();
+    const campground = await Campground.findById(campId);
+
+    campground.reviews.push(review._id);
+    await campground.save();
     return res.status(201).json(review);
   } catch (error) {
     return console.log("error during createReview", error);
@@ -29,7 +36,7 @@ exports.deleteReview = async (req, res) => {
       (review) => review !== reviewId
     );
     campground.reviews = newreviews;
-    const newcampground = campground.save();
+    const newcampground = await campground.save();
     console.log("campground after deleting review", newcampground);
   } catch (error) {
     console.log("error during deletion of review", error);
@@ -37,11 +44,11 @@ exports.deleteReview = async (req, res) => {
 };
 exports.updateReview = async (req, res) => {
   const { campId, reviewId } = req.params;
-  const { rating, message } = req.body;
+  const { rating, description } = req.body;
   try {
     const updatedReview = await Review.findByIdAndUpdate(
       reviewId,
-      { rating, message },
+      { $set: { rating, description, title } },
       { new: true }
     );
     return res.status(200).json(updatedReview);

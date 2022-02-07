@@ -5,7 +5,7 @@ const {
   updateReview,
 } = require("../controllers/review.js");
 const auth = require("../middlewares/auth.js");
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 router.post("/", auth, createReview);
 router.delete("/:reviewId", auth, deleteReview);

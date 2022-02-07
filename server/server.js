@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+var morgan = require("morgan");
 
 const { storage } = require("./imageupload/cloudinary");
 const userAuthRoute = require("./routes/user.js");
@@ -13,8 +14,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
+app.use(morgan("tiny"));
+
 app.use("/auth", userAuthRoute);
-app.use("/campground/:campId/review/", reviewRoute);
+app.use("/campground/:campId/review", reviewRoute);
 app.use("/campground", campgroundRoute);
 
 const db_url = process.env.DB_URL;

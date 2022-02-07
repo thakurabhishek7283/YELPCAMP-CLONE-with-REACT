@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/thakurabhishek7283/yelpcamp-react#readme",
   "devDependencies": {
+    "morgan": "^1.10.0",
     "nodemon": "^2.0.15"
   },
   "dependencies": {

@@ -14,7 +14,7 @@ const MapWidget = ({ location }) => {
       container: mapContainer.current,
       style: "mapbox://styles/mapbox/streets-v11",
       center: location.coordinates,
-      zoom: 9,
+      zoom: 6,
     });
     new mapboxgl.Marker().setLngLat(location.coordinates).addTo(map.current);
     const nav = new mapboxgl.NavigationControl();

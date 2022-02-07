@@ -5,6 +5,7 @@ import {
   CardActions,
   Grid,
   Button,
+  Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 // import resume from "../../images/Resume.png";
@@ -15,7 +16,7 @@ const CampListCard = ({ campground }) => {
     navigate(`/campground/${campground._id}`);
   };
   return (
-    <Card sx={{ maxWidth: 1000 }}>
+    <Card sx={{ minWidth: "80%", marginY: 1 }}>
       <Grid container spacing={2}>
         <Grid item md={4} sm={6} xs={12}>
           <CardMedia
@@ -30,13 +31,8 @@ const CampListCard = ({ campground }) => {
 
         <Grid item md={8} sm={6} xs={12}>
           <CardContent>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-            culpa qui officia deserunt mollit anim id est laborum.
+            <Typography variant="h4">{campground.title}</Typography>
+            <Typography variant="body1">{campground.description}</Typography>
           </CardContent>
           <CardActions>
             <Button

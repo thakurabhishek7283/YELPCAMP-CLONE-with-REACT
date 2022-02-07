@@ -2,12 +2,13 @@ import NavBar from "../components/NavBar/NavBar";
 import Footer from "../components/Footer/Footer";
 import CampImageList from "../components/CampImageList/CampImageList";
 import MapWidget from "../components/Map/Mapwidget";
-import Reviews from "../components/Review/Review";
-import { CircularProgress, Container, Grid } from "@mui/material";
+import Review from "../components/Review/Review";
+import { CircularProgress, Container, Divider, Grid, Box } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { fetchCampground } from "../actions/campground";
+import ReviewCreateForm from "../components/ReviewForm/ReviewCreateForm";
 
 const CampgroundLayout = () => {
   const { isLoading, campground } = useSelector((state) => state.campground);
@@ -33,6 +34,13 @@ const CampgroundLayout = () => {
             <MapWidget location={campground.location} />
           </Grid>
         </Grid>
+        <Divider sx={{ height: 1, marginY: 5, borderColor: "white" }} />
+        <Box>
+          <ReviewCreateForm campId={campId} />
+        </Box>
+        {campground.reviews.map((review) => {
+          return <Review review={review} />;
+        })}
       </Container>
       <Footer />
     </>
