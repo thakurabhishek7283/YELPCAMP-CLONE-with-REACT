@@ -28,11 +28,17 @@ const campgroundSchema = new mongoose.Schema({
     default: [],
   },
   location: {
-    type: String,
-    required: true,
+    type: {
+      type: String,
+      enum: ["Point"],
+      required: true,
+    },
+    coordinates: {
+      type: [Number],
+      required: true,
+    },
   },
-  // lat: Number,
-  // long: Number,
+
   reviews: [{ type: mongoose.SchemaTypes.ObjectId, ref: "Review" }],
   hasRated: [{ type: mongoose.SchemaTypes.ObjectId, ref: "User" }],
   createdAt: {

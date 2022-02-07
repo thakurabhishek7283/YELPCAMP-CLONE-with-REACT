@@ -62,8 +62,10 @@ export const fetchCampgrounds = (page) => async (dispatch) => {
 
 export const fetchCampground = (campId) => async (dispatch) => {
   try {
+    console.log("hello");
     dispatch({ type: START_LOADING });
     const { data } = await api.fetchCampground(campId);
+    console.log(data);
     dispatch({ type: FETCH_CAMP, payload: data });
     dispatch({ type: END_LOADING });
   } catch (error) {
