@@ -9,6 +9,7 @@ import { fetchCampgrounds } from "../actions/campground";
 const HomeLayout = () => {
   const dispatch = useDispatch();
   const { isLoading, campgrounds } = useSelector((state) => state.campground);
+  const { authData } = useSelector((state) => state.user);
   const [page, setpage] = useState(1);
   useEffect(() => {
     dispatch(fetchCampgrounds(page));

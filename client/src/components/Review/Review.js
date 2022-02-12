@@ -11,14 +11,13 @@ import {
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { deleteReview } from "../../actions/review";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useState } from "react";
 import ReviewForm from "../ReviewForm/ReviewEditForm";
 
 const Review = ({ review }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isLoading } = useSelector((state) => state.review);
   const [edit, setEdit] = useState(false);
   const handleDeleteReview = () => {
     dispatch(deleteReview(review.campId, review._id, navigate));
@@ -28,9 +27,6 @@ const Review = ({ review }) => {
     setEdit(true);
   };
 
-  if (isLoading) {
-    return <CircularProgress />;
-  }
   if (!edit) {
     return (
       <Card>

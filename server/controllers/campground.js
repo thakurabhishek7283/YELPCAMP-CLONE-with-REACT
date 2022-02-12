@@ -14,6 +14,7 @@ exports.getCampground = async (req, res) => {
       .populate("creator", "fullName")
       .populate("hasRated", "_id")
       .populate("reviews");
+
     if (!campground)
       return res.status(404).json({ message: "campground not found" });
 

@@ -35,12 +35,14 @@ const CampgroundLayout = () => {
           </Grid>
         </Grid>
         <Divider sx={{ height: 1, marginY: 5, borderColor: "white" }} />
-        <Box>
+        <Box sx={{ width: "60%", paddingX: 5, marginY: 9 }}>
           <ReviewCreateForm campId={campId} />
         </Box>
-        {campground.reviews.map((review) => {
-          return <Review review={review} />;
-        })}
+        <Box sx={{ width: "60%", paddingX: 5 }}>
+          {campground.reviews.map((review) => {
+            return <Review review={review} />;
+          })}
+        </Box>
       </Container>
       <Footer />
     </>

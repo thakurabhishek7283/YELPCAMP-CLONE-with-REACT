@@ -19,7 +19,6 @@ export const fetchCampgrounds = (page) => API.get(`/campground?page=${page}`);
 export const deleteCampground = (campId) => API.delete(`/campground/${campId}`);
 
 export const createReview = (campId, review) => {
-  console.log("creating review");
   return API.post(`/campground/${campId}/review`, review);
 };
 

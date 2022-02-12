@@ -92,10 +92,14 @@ const NavBar = () => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              <MenuItem onClick={() => navigate("/")}>Home</MenuItem>
-              <MenuItem onClick={() => navigate("/campground/new")}>
-                New Campground
+              <MenuItem>
+                <Link to="/">Home </Link>
               </MenuItem>
+              {user ? (
+                <MenuItem>
+                  <Link to="/campground/new">New Campground</Link>
+                </MenuItem>
+              ) : null}
             </Menu>
           </Box>
           <Typography
@@ -113,12 +117,14 @@ const NavBar = () => {
             >
               Home
             </Button>
-            <Button
-              onClick={() => navigate("/campground/new")}
-              sx={{ my: 2, color: "white", display: "block" }}
-            >
-              New Campground
-            </Button>
+            {user ? (
+              <Button
+                onClick={() => navigate("/campground/new")}
+                sx={{ my: 2, color: "white", display: "block" }}
+              >
+                New Campground
+              </Button>
+            ) : null}
           </Box>
           <Button color="secondary" variant="contained" onClick={logout}>
             {user ? "Logout" : "Sign in"}

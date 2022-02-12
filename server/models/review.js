@@ -20,8 +20,7 @@ const reviewSchema = new mongoose.Schema({
     required: true,
   },
   creator: {
-    type: mongoose.SchemaTypes.ObjectId,
-    ref: "User",
+    type: String,
   },
   campId: {
     type: mongoose.SchemaTypes.ObjectId,
