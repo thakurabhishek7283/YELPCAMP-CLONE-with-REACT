@@ -15,20 +15,30 @@ import {
   Chip,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchCampground } from "../actions/campground";
 import ReviewCreateForm from "../components/ReviewForm/ReviewCreateForm";
 import MenuList from "../components/menu/menuItem";
 
 const CampgroundLayout = () => {
+  const user = JSON.parse(localStorage.getItem("profile"));
   const { isLoading, campground } = useSelector((state) => state.campground);
   const dispatch = useDispatch();
+  const { authData } = useSelector((state) => state.user);
   const { campId } = useParams();
 
+  const [validuser, setvaliduser] = useState(false);
+
   useEffect(() => {
+    dispatch({ type: "USER_REFRESH" });
     dispatch(fetchCampground(campId));
   }, []);
+
+  useEffect(() => {
+    if (!authData || !campground) return;
+    if (authData._id == campground.creator._id) setvaliduser(true);
+  });
 
   if (!campground || isLoading) {
     return <CircularProgress />;
@@ -37,7 +47,7 @@ const CampgroundLayout = () => {
     <>
       <NavBar />
       <Container maxWidth="lg" sx={{ minHeight: "80vh", marginY: 5 }}>
-        <MenuList campId={campground._id} />
+        {user && validuser && <MenuList campId={campground._id} />}
         <Grid container spacing={5}>
           <Grid item xs={12} sm={7}>
             <CampImageList images={campground.images} />
@@ -49,13 +59,15 @@ const CampgroundLayout = () => {
         <Divider sx={{ height: 1, marginY: 4, borderColor: "white" }} />
         <Grid container spacing={5}>
           <Grid item xs={12} sm={7}>
-            <Box sx={{ width: "100%", paddingX: 5 }}>
-              <ReviewCreateForm campId={campId} />
-            </Box>
+            {user && (
+              <Box sx={{ width: "100%", paddingX: 5 }}>
+                <ReviewCreateForm campId={campId} />
+              </Box>
+            )}
 
             <Box sx={{ width: "100%", paddingX: 5 }}>
-              {campground.reviews.map((review) => {
-                return <Review review={review} />;
+              {campground.reviews.map((review, index) => {
+                return <Review key={index} review={review} />;
               })}
             </Box>
           </Grid>
@@ -65,8 +77,9 @@ const CampgroundLayout = () => {
                 {campground.title}
               </Typography>
               <Stack sx={{ display: "inline" }}>
-                {campground.tags.map((tag) => (
+                {campground.tags.map((tag, index) => (
                   <Chip
+                    key={index}
                     label={tag}
                     color="success"
                     sx={{ display: "inline-flex" }}

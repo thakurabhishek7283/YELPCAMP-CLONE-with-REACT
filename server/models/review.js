@@ -19,8 +19,11 @@ const reviewSchema = new mongoose.Schema({
     maxLength: 225,
     required: true,
   },
-  creator: {
+  creatorName: {
     type: String,
+  },
+  creatorId: {
+    type: mongoose.SchemaTypes.ObjectId,
   },
   campId: {
     type: mongoose.SchemaTypes.ObjectId,

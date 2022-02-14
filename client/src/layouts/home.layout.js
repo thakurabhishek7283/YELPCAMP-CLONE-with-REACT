@@ -14,6 +14,7 @@ const HomeLayout = () => {
   const { authData } = useSelector((state) => state.user);
   const [page, setpage] = useState(1);
   useEffect(() => {
+    dispatch({ type: "USER_REFRESH" });
     dispatch(fetchCampgrounds(page));
   }, [page]);
   return (

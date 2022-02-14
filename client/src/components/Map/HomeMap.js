@@ -19,13 +19,13 @@ const HomeMap = ({ campgrounds }) => {
     });
     const nav = new mapboxgl.NavigationControl();
     map.current.addControl(nav, "top-right");
+    campgrounds.map((camp) => {
+      new mapboxgl.Marker()
+        .setLngLat(camp.location.coordinates)
+        .addTo(map.current);
+    });
   });
 
-  campgrounds.map((camp) => {
-    new mapboxgl.Marker()
-      .setLngLat(camp.location.coordinates)
-      .addTo(map.current);
-  });
   return <Box ref={mapContainer} sx={{ height: "350px", width: "100%" }}></Box>;
 };
 

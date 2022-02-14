@@ -8,17 +8,26 @@ import {
   Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MenuList from "../menu/menuItem";
+import { useSelector } from "react-redux";
 
 // import resume from "../../images/Resume.png";
 
 const CampListCard = ({ campground }) => {
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
+  const user = JSON.parse(localStorage.getItem("profile"));
   const navigate = useNavigate();
+  const { authData } = useSelector((state) => state.user);
+
+  const [validuser, setvaliduser] = useState(false);
+
+  useEffect(() => {
+    if (!authData) return;
+    if (authData._id == campground.creator._id) setvaliduser(true);
+  });
+
   const handleViewClick = () => {
-    if (user) navigate(`/campground/${campground._id}`);
-    else navigate("/auth");
+    navigate(`/campground/${campground._id}`);
   };
   return (
     <Card sx={{ minWidth: "80%", marginY: 1 }}>
@@ -49,9 +58,11 @@ const CampListCard = ({ campground }) => {
             </Button>
           </CardActions>
         </Grid>
-        <Grid item md={1} sm={1} xs={1}>
-          <MenuList campId={campground._id} />
-        </Grid>
+        {user && validuser && (
+          <Grid item md={1} sm={1} xs={1}>
+            <MenuList campId={campground._id} />
+          </Grid>
+        )}
       </Grid>
     </Card>
   );

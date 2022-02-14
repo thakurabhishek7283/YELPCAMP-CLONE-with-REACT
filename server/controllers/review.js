@@ -4,13 +4,15 @@ const { Campground } = require("../models/campground.js");
 exports.createReview = async (req, res) => {
   const { campId } = req.params;
   const { title, description, rating } = req.body;
-  const creator = req.userName;
+  const creatorName = req.userName;
+  const creatorId = req.userId;
   try {
     const reviewdoc = new Review({
       title,
       rating,
       description,
-      creator,
+      creatorName,
+      creatorId,
       campId,
     });
     const review = await reviewdoc.save();
