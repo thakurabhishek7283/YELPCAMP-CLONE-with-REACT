@@ -98,10 +98,10 @@ exports.deleteCampground = async (req, res) => {
     const reviews = [...campground.reviews];
     const images = [...campground.images];
 
-    cloudinary.v2.api.delete_resources([images.publicId]);
-    // images.forEach(element=>{
-    //   cloudinary.uploader.destroy(element.publicId)
-    // })
+    // cloudinary.v2.api.delete_resources([...images.publicId]);
+    images.forEach((element) => {
+      cloudinary.uploader.destroy(element.publicId);
+    });
     reviews.forEach(async (review) => {
       await Review.deleteOne({ _id: review._id });
     });

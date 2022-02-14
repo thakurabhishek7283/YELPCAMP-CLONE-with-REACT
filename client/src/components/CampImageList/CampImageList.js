@@ -6,11 +6,10 @@ function CampImageList({ images }) {
       <ImageList
         sx={{
           width: "100%",
-          height: 450,
+          height: 350,
         }}
         variant="masonry"
         cols={3}
-        gap={8}
       >
         {images.map((image, index) => (
           <ImageListItem

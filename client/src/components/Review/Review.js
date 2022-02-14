@@ -5,8 +5,6 @@ import {
   Rating,
   CardActions,
   Button,
-  CircularProgress,
-  Box,
 } from "@mui/material";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { deleteReview } from "../../actions/review";
@@ -29,10 +27,10 @@ const Review = ({ review }) => {
 
   if (!edit) {
     return (
-      <Card>
+      <Card sx={{ marginY: 2 }}>
         <CardContent>
           <AccountCircleOutlinedIcon />
-          <Typography variant="h3">{review.creator}</Typography>
+          <Typography variant="subtitle1">{review.creator}</Typography>
 
           <Rating name="simple-controlled" value={review.rating} readOnly />
           <Typography variant="h5">{review.title}</Typography>

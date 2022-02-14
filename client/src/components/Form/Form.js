@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { createCampground } from "../../actions/campground";
 
 function Form() {
-  const isLoading = useSelector((state) => state.campground.isLoading);
+  const { isLoading } = useSelector((state) => state.campground);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 

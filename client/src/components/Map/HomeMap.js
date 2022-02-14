@@ -1,10 +1,11 @@
-import React, { useRef, useEffect, useState } from "react";
+import { useRef, useEffect } from "react";
 import { Box } from "@mui/material";
+
 var mapboxgl = require("mapbox-gl");
 
 mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_TOKEN;
 
-const MapWidget = ({ location }) => {
+const HomeMap = ({ campgrounds }) => {
   const mapContainer = useRef(null);
   const map = useRef(null);
 
@@ -13,15 +14,19 @@ const MapWidget = ({ location }) => {
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
       style: "mapbox://styles/mapbox/streets-v11",
-      center: location.coordinates,
-      zoom: 6,
+      center: [21.8243, 39.0742],
+      zoom: 2,
     });
-    new mapboxgl.Marker().setLngLat(location.coordinates).addTo(map.current);
     const nav = new mapboxgl.NavigationControl();
     map.current.addControl(nav, "top-right");
   });
 
+  campgrounds.map((camp) => {
+    new mapboxgl.Marker()
+      .setLngLat(camp.location.coordinates)
+      .addTo(map.current);
+  });
   return <Box ref={mapContainer} sx={{ height: "350px", width: "100%" }}></Box>;
 };
 
-export default MapWidget;
+export default HomeMap;
