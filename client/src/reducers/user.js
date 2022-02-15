@@ -12,7 +12,6 @@ export default (state = { authData: null }, action) => {
 
     case "USER_REFRESH":
       const user = JSON.parse(localStorage.getItem("profile"));
-
       const decoded = jwt_decode(user.token);
       return { ...state, authData: decoded };
 

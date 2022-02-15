@@ -39,7 +39,7 @@ const CampListCard = ({ campground }) => {
               paddingTop: "56.25%", // 16:9,
               marginTop: "40",
             }}
-            image={campground.images[0].imageUrl}
+            image={campground.images[0].image}
           />
         </Grid>
 

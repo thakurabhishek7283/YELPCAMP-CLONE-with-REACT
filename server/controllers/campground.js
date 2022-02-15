@@ -27,7 +27,7 @@ exports.createCampground = async (req, res) => {
   const { title, description, tags, location } = req.body;
   const creator = req.userId;
   const images = req.files.map((file) => {
-    return { imageUrl: file.path, publicId: file.filename };
+    return { image: file.path, publicId: file.filename };
   });
   try {
     const geoData = await geocoder
@@ -70,7 +70,7 @@ exports.updateCampground = async (req, res) => {
   const { title, description, tags, location, deleteArray } = req.body;
   const { campId } = req.params;
   const images = req.files.map((file) => {
-    return { imageUrl: file.url, publicId: file.public_id };
+    return { image: file.url, publicId: file.public_id };
   });
   try {
     const doc = await Campground.findByIdAndUpdate(

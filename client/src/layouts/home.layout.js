@@ -1,22 +1,28 @@
 import NavBar from "../components/NavBar/NavBar";
 import Footer from "../components/Footer/Footer";
 import CampListCard from "../components/CampListCard/CampListCard";
-import { Container, Pagination } from "@mui/material";
+import { CircularProgress, Container, Pagination } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { fetchCampgrounds } from "../actions/campground";
 import HomeMap from "../components/Map/HomeMap";
 import { green } from "@mui/material/colors";
+import { useNavigate } from "react-router-dom";
+
+const user = JSON.parse(localStorage.getItem("profile"));
 
 const HomeLayout = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { isLoading, campgrounds } = useSelector((state) => state.campground);
-  const { authData } = useSelector((state) => state.user);
   const [page, setpage] = useState(1);
   useEffect(() => {
-    dispatch({ type: "USER_REFRESH" });
     dispatch(fetchCampgrounds(page));
   }, [page]);
+
+  if (isLoading) {
+    return <CircularProgress />;
+  }
   return (
     <>
       <NavBar />
@@ -26,7 +32,7 @@ const HomeLayout = () => {
       <Container
         maxWidth="lg"
         sx={{
-          minHeight: "80vh",
+          minHeight: "50vh",
           display: "flex",
           flexDirection: "column",
           paddingY: 5,
